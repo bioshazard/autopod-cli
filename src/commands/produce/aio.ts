@@ -60,31 +60,32 @@ hello world! (./src/commands/hello/world.ts)
 
       cmdArgs.push('-filter_complex')
 
-      const complexFilters = []
-
-      // complexFilters.push(`${vocalTracks}amix=inputs=${fileNames.length}:duration=longest,adelay=10000[vocals]`)
+      const complexFilters: string[] = []
 
       // Prepare normalize vocals
+      const normalizedVocalTracksList: string[] = []
       fileNames.forEach( (mp3, index) => {
         complexFilters.push(`[${2 + index}:a]dynaudnorm=f=150:g=15[normalized${2 + index}]`)
+        normalizedVocalTracksList.push(`[normalized${2 + index}]`)
       })
-      const vocalTracks = Array.from({ length: fileNames.length }, (_, i) => `[normalized${2 + i}]`).join('');
       
       // Combine vocals with 10s delay (for intro)
-      complexFilters.push(`${vocalTracks}amix=inputs=${fileNames.length}:duration=longest,adelay=10000[vocals]`)
+      complexFilters.push(`${normalizedVocalTracksList.join('')}amix=inputs=${fileNames.length}:duration=longest,adelay=10000,volume=2[vocals]`)
 
       // Delay outro by duration of first track
       complexFilters.push(`[1:a]adelay=${duration}000[outro]`)
 
       // Combine intro, vocals, and outro
-      complexFilters.push(`[0:a][vocals][outro]amix=inputs=3:duration=longest[aout]`)
+      // const finalVolumeFix1 = 'volume=2'
+      const finalVolumeFix2 = 'dynaudnorm=f=150:g=15'
+      complexFilters.push(`[0:a][vocals][outro]amix=inputs=3:duration=longest,${finalVolumeFix2}[aout]`)
 
       // Join filters as next cmdArg
       cmdArgs.push(complexFilters.join(';'))
 
       cmdArgs.push('-map')
       cmdArgs.push('[aout]')
-      cmdArgs.push('output-aio.mp3')
+      cmdArgs.push(`output-aio-${Math.floor(new Date().getTime() / 1000)}.mp3`)
       console.log(cmdArgs)
 
       const child = spawn(cmd, cmdArgs, { });
@@ -114,12 +115,6 @@ hello world! (./src/commands/hello/world.ts)
       // Forward the child process's STDIN to the console
       child.stdout.pipe(process.stdout);
       child.stderr.pipe(process.stderr);
-    }
-
-    
-
-
-
-    
+    }    
   }
 }
