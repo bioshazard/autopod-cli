@@ -24,10 +24,12 @@ hello world! (./src/commands/hello/world.ts)
   async run(): Promise<void> {
     const {args, flags} = await this.parse(ParseVTT)
 
-    const parsemergepy = path.join(
-      this.config.root, '..', '..', 
-      'transcripts', 'parse-merge.py'
-    )
+    const parsemergepy = path.join(this.config.root, 'src', 'scripts', 'parseMerge.py')
+
+    // const parsemergepy = path.join(
+    //   this.config.root, '..', '..', 
+    //   'transcripts', 'parse-merge.py'
+    // )
 
     const outputStream = fs.createWriteStream(args.outfile);
 

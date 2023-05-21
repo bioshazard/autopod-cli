@@ -9,6 +9,8 @@ hello friend from oclif! (./src/commands/hello/index.ts)
 `,
   ]
 
+  // whisper --model medium.en raw/* -o transcripts
+
   static flags = {
     from: Flags.string({char: 'f', description: 'Who is saying hello', required: true}),
   }

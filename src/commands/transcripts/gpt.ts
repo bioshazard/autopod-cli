@@ -23,9 +23,11 @@ hello world! (./src/commands/hello/world.ts)
   async run(): Promise<void> {
     const {args, flags} = await this.parse(TranscriptGPT)
 
-    const parsemergepy = path.join(
-      this.config.root, '..', '..', 
-      'transcripts', 'podcast-desc.py'
+    const pyscript = path.join(this.config.root, 'src', 'scripts', 'podcast-desc.py'
+
+      // this.config.root, '..', '..', 
+      // 'transcripts', 'podcast-desc.py'
+
       // 'transcripts', 'recap.py'
       // 'transcripts', 'summarize.py'
     )
@@ -37,7 +39,7 @@ hello world! (./src/commands/hello/world.ts)
     // process.env.PROMPT_KEY = "short-summary"
     // process.env.PROMPT_KEY = args.promptKey
     // process.env.BATCH_SIZE = args.batchSize
-    const child = spawn('python', [parsemergepy], {
+    const child = spawn('python', [pyscript], {
       env: process.env
     });
 

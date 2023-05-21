@@ -59,6 +59,13 @@ hello world! (./src/commands/hello/world.ts)
       });
 
       cmdArgs.push('-filter_complex')
+      // # Filter Complex
+      // Delay outro by ($introDuration + $vocalsDuration - $outroDuration)s
+      // Normalize each vocal track and save into `normalized#`
+      // Combine vocals, correct volume reduction (volume=2)
+      // Remove any edits needed (remove timestamp span array from back to front)
+      // Delay vocals by ($introDuration)s
+      // Combine intro, vocals, outro. Correct volume reduction (volume=2 or normalize)
 
       const complexFilters: string[] = []
 
@@ -68,6 +75,14 @@ hello world! (./src/commands/hello/world.ts)
         complexFilters.push(`[${2 + index}:a]dynaudnorm=f=150:g=15[normalized${2 + index}]`)
         normalizedVocalTracksList.push(`[normalized${2 + index}]`)
       })
+
+      // Remove blocks of time as needed
+      // TODO: Variable...
+      // const 
+      // `[0:a]atrim=start=0:end=534[a1]`
+      // `[0:a]atrim=start=894:end=999999[a2]`
+      // `[a1][a2]concat=n=2:v=0:a=1[out]`
+
       
       // Combine vocals with 10s delay (for intro)
       complexFilters.push(`${normalizedVocalTracksList.join('')}amix=inputs=${fileNames.length}:duration=longest,adelay=10000,volume=2[vocals]`)
