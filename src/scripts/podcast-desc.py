@@ -25,6 +25,8 @@ docs = text_splitter.create_documents([transcript_text])
 print("Docs array length:", len(docs))
 
 # "Get best topic from each list"
+# "Count how many sections there are, label them"
+
 
 summary_and_bullets = "\n\n\n".join([
     "{text}",

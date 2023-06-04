@@ -34,6 +34,9 @@ hello world! (./src/commands/hello/world.ts)
     const outputStream = fs.createWriteStream(args.outfile);
 
     // maybe not needed to override env... spawned env handles it?
+    if(args.offset) {
+      process.env.VTT_OFFSET = args.offset
+    }
     process.env.VTT_ACTOR = args.actor
     process.env.VTT_FILE = args.infile
     const child = spawn('python', [parsemergepy], {
@@ -41,7 +44,7 @@ hello world! (./src/commands/hello/world.ts)
     });
 
     child.stdout.on('data', (data: string | Buffer) => {
-      console.log(`stdout: ${data}`);
+      // console.log(`stdout: ${data}`);
       const output = data.toString();
       outputStream.write(output);
     });

@@ -41,8 +41,7 @@ hello world! (./src/commands/hello/world.ts)
 
       // Get duration of first track for delaying the outro
       const duration = spawnSync('ffprobe', [
-        '-v', 'error',
-        '-show_entries', 'format=duration',
+        '-v', 'error', '-show_entries', 'format=duration',
         '-of', 'default=noprint_wrappers=1:nokey=1',
         fileNames[0]
       ]).stdout.toString().trim().split('.')[0];
@@ -102,6 +101,8 @@ hello world! (./src/commands/hello/world.ts)
       cmdArgs.push('[aout]')
       cmdArgs.push(`output-aio-${Math.floor(new Date().getTime() / 1000)}.mp3`)
       console.log(cmdArgs)
+
+      // return
 
       const child = spawn(cmd, cmdArgs, { });
   

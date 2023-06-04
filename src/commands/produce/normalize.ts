@@ -62,11 +62,11 @@ hello world! (./src/commands/hello/world.ts)
     });
 
     child.stdout.on('data', (data: string | Buffer) => {
-      console.log(`stdout: ${data}`);
+      // console.log(`stdout: ${data}`);
     });
     
     child.stderr.on('data', (data: string | Buffer) => {
-      console.error(`stderr: ${data}`);
+      // console.error(`stderr: ${data}`);
     });
     
     child.on('close', (code: number) => {

@@ -23,7 +23,7 @@ hello world! (./src/commands/hello/world.ts)
   async run(): Promise<void> {
     const {args, flags} = await this.parse(TranscriptGPT)
 
-    const pyscript = path.join(this.config.root, 'src', 'scripts', 'podcast-desc.py'
+    const pyscript = path.join(this.config.root, 'src', 'scripts', 'summarizeChat.py'
 
       // this.config.root, '..', '..', 
       // 'transcripts', 'podcast-desc.py'
